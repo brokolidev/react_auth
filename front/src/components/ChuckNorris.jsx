@@ -1,40 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import spinner from '../spinner.gif';
 
 const ChuckNorris = ({ token }) => {
 	const [fact, setFact] = useState('');
+	const [loading, setLoading] = useState(true); // Add loading state
 	const [error, setError] = useState('');
 
 	useEffect(() => {
 		const fetchFact = async () => {
 			try {
 				const response = await fetch('http://localhost:3333/fact', {
-					method: 'GET',
 					headers: {
-						'Authorization': `Bearer ${token}`,
-						'Content-Type': 'application/json',
-					},
+						'Authorization': `Bearer ${token}`
+					}
 				});
 
-				if (!response.ok) {
-					throw new Error('Failed to fetch Chuck Norris fact.');
+				if (response.ok) {
+					const data = await response.json();
+					setFact(data.fact);
+					setLoading(false); // Set loading to false after fetching data
+				} else {
+					setError('Failed to fetch Chuck Norris fact.');
+					setLoading(false); // Set loading to false after an error
 				}
-
-				const data = await response.json();
-				console.log(data);
-				setFact(data.fact);
 			} catch (error) {
-				setError(error.message);
+				setError('An error occurred. Please try again.');
+				setLoading(false); // Set loading to false after an error
 			}
 		};
 
 		fetchFact();
-	}, [token]);
+	}, []);
 
 	return (
 		<div>
 			<h2>Chuck Norris Fact</h2>
-			{error && <p style={{ color: 'red' }}>{error}</p>}
-			{fact && <p>{fact}</p>}
+			{loading ? ( // Display loading spinner while fetching data
+				<img src={spinner} alt="Loading..." />
+			) : error ? (
+				<p style={{ color: 'red' }}>{error}</p>
+			) : (
+				<p>{fact}</p>
+			)}
 		</div>
 	);
 };
