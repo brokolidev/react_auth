@@ -14,7 +14,7 @@ function App() {
         <div className="App">
             <header className="App-header">
                 {!token ? (
-                    <LoginForm setToken={setToken} />
+                    <LoginForm setToken={(newToken) => setToken(newToken)} />
                 ) : (
                     <div>
                         <button onClick={handleLogout}>Logout</button>
