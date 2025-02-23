@@ -5,6 +5,10 @@ import ChuckNorris from "./components/ChuckNorris";
 
 function App() {
     const [token, setToken] = useState(null);
+    
+    const handleLogout = () => {
+        setToken(null);
+    };
 
     return (
         <div className="App">
@@ -12,7 +16,10 @@ function App() {
                 {!token ? (
                     <LoginForm setToken={setToken} />
                 ) : (
-                    <ChuckNorris token={token} />
+                    <div>
+                        <button onClick={handleLogout}>Logout</button>
+                        <ChuckNorris token={token} />
+                    </div>
                 )}
             </header>
         </div>
