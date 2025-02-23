@@ -1,6 +1,7 @@
 import './App.css';
 import LoginForm from "./components/LoginForm";
 import {useState} from "react";
+import ChuckNorris from "./components/ChuckNorris";
 
 function App() {
     const [token, setToken] = useState(null);
@@ -11,10 +12,7 @@ function App() {
                 {!token ? (
                     <LoginForm setToken={setToken} />
                 ) : (
-                    <div>
-                        <h2>Welcome to the App!</h2>
-                        {/* Here, you can add other components that should be displayed once the user is authenticated */}
-                    </div>
+                    <ChuckNorris token={token} />
                 )}
             </header>
         </div>
