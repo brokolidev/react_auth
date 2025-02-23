@@ -17,7 +17,7 @@ const LoginForm = ({ setToken }) => {
 
 		// Fetch to the backend /login route
 		try {
-			const response = await fetch('/login', {
+			const response = await fetch('http://localhost:3333/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ const LoginForm = ({ setToken }) => {
 
 			if (response.ok) {
 				// Set the token in the parent component's state
-				setToken(data.token);
+				setToken(data.uuid);
 			} else {
 				setError(data.message || 'Login failed.');
 			}
@@ -46,7 +46,7 @@ const LoginForm = ({ setToken }) => {
 				<div>
 					<label htmlFor="username">Username:</label>
 					<input
-						type="text"
+						type="email"
 						id="username"
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
