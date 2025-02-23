@@ -22,7 +22,8 @@ const LoginForm = ({ setToken }) => {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ username, password }),
+                //ensure that any casing of the username will work.
+				body: JSON.stringify({ username: username.toLowerCase(), password }),
 			});
 
 			const data = await response.json();
